@@ -32,6 +32,24 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(apiErrorReponseDTO);
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ApiErrorReponseDTO> handleInvalidCredentials(
+            InvalidCredentialsException exception, HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+
+
+        ApiErrorReponseDTO apiErrorReponseDTO = new ApiErrorReponseDTO(
+                status.value(),
+                status.getReasonPhrase(),
+                exception.getMessage(),
+                request.getRequestURI(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(status).body(apiErrorReponseDTO);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationErrors(
             MethodArgumentNotValidException exception,
