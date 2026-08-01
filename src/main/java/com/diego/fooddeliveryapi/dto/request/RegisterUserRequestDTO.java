@@ -1,6 +1,8 @@
 package com.diego.fooddeliveryapi.dto.request;
 
+import com.diego.fooddeliveryapi.enums.UserRole;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record RegisterUserRequestDTO(
@@ -12,7 +14,10 @@ public record RegisterUserRequestDTO(
         String email,
 
         @NotBlank(message = "O campo senha deve ser preenchido!")
-        String password
+        String password,
+
+        @NotNull(message = "O campo tipo de usário deve ser preenchido!")
+        UserRole role
 ) {
 
 

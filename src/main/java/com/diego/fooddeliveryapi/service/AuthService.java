@@ -35,6 +35,7 @@ public class AuthService {
         User user = new User();
         user.setName(dto.name().trim());
         user.setEmail(normalizedEmail);
+        user.setRole(dto.role());
         user.setPassword(passwordEncoder.encode(dto.password()));
         userRepository.save(user);
 
@@ -54,6 +55,6 @@ public class AuthService {
         String token = jwtService.generateToken(user);
 
         return
-                new LoginReponseDTO(user.getId(), user.getName(), user.getEmail(), token);
+                new LoginReponseDTO(user.getId(), user.getName(), user.getEmail(), user.getRole().toString(), token);
     }
 }

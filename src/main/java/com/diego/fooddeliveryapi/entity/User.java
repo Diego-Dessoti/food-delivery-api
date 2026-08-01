@@ -1,5 +1,6 @@
 package com.diego.fooddeliveryapi.entity;
 
+import com.diego.fooddeliveryapi.enums.UserRole;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,4 +26,8 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private UserRole role;
 }

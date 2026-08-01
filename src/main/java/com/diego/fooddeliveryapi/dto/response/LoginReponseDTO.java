@@ -6,6 +6,7 @@ public record LoginReponseDTO(
         Long id,
         String name,
         String email,
+        String role,
         String token
 ) {
 
