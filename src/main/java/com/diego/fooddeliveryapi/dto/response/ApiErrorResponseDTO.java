@@ -2,7 +2,7 @@ package com.diego.fooddeliveryapi.dto.response;
 
 import java.time.LocalDateTime;
 
-public record ApiErrorReponseDTO(
+public record ApiErrorResponseDTO(
         int status,
         String error,
         String message,
