@@ -12,7 +12,7 @@ public record UpdateProductRequestDTO(
         @Size(max = 150, message = "O nome deve ter no máximo 150 caracteres")
         String name,
 
-        @NotBlank(message = "O nome do produto é obrigatória")
+        @NotBlank(message = "A descrição do produto é obrigatória")
         @Size(max = 500, message = "A descrição deve ter no máximo 500 caracteres")
         String description,
 

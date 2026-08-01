@@ -29,4 +29,8 @@ public class Product {
 
     @Column(nullable = false)
     private Boolean active;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "store_id", nullable = false)
+    private Store store;
 }

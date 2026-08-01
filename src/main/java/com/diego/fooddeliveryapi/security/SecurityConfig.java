@@ -71,12 +71,17 @@ public class SecurityConfig {
                                 ).hasRole("CUSTOMER")
 
                                 .requestMatchers(
-                                        HttpMethod.POST,
+                                        HttpMethod.PATCH,
                                         "/api/orders/*/status"
                                 ).hasRole("RESTAURANT")
 
                                 .requestMatchers(
                                         HttpMethod.POST,
+                                        "/api/products/**"
+                                ).hasRole("RESTAURANT")
+
+                                .requestMatchers(
+                                        HttpMethod.PUT,
                                         "/api/products/**"
                                 ).hasRole("RESTAURANT")
 

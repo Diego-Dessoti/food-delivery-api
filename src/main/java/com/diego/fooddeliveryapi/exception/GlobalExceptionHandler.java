@@ -106,6 +106,24 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
+    @ExceptionHandler(StoreNotFoundException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleStoreNotFound(
+            StoreNotFoundException exception,
+            HttpServletRequest request
+    ) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        ApiErrorResponseDTO response = new ApiErrorResponseDTO(
+                status.value(),
+                status.getReasonPhrase(),
+                exception.getMessage(),
+                request.getRequestURI(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(status).body(response);
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiErrorResponseDTO> handleInvalidOrderStatus(
             HttpMessageNotReadableException exception,

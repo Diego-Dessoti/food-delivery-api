@@ -7,6 +7,8 @@ import com.diego.fooddeliveryapi.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +25,10 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> create(
-            @Valid @RequestBody CreateProductRequestDTO request
+            @Valid @RequestBody CreateProductRequestDTO request,
+            @AuthenticationPrincipal Jwt jwt
     ) {
-        ProductResponseDTO response = productService.create(request);
+        ProductResponseDTO response = productService.create(request, jwt.getSubject());
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -35,16 +38,19 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> update(
             @PathVariable Long id,
-            @Valid @RequestBody UpdateProductRequestDTO request
+            @Valid @RequestBody UpdateProductRequestDTO request,
+            @AuthenticationPrincipal Jwt jwt
     ) {
         return ResponseEntity.ok(
-                productService.update(id, request)
+                productService.update(id, request, jwt.getSubject())
         );
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> findAll() {
-        return ResponseEntity.ok(productService.findAll());
+    public ResponseEntity<List<ProductResponseDTO>> findAll(
+            @RequestParam(required = false) Long storeId
+    ) {
+        return ResponseEntity.ok(productService.findAll(storeId));
     }
 
     @GetMapping("/{id}")
@@ -55,5 +61,4 @@ public class ProductController {
     }
 
 }
-
 

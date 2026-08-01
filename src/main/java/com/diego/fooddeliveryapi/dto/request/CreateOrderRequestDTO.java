@@ -9,6 +9,9 @@ public record CreateOrderRequestDTO(
         @NotBlank(message = "O nome do cliente é obrigatório")
         String customerName,
 
+        @NotNull(message = "A loja é obrigatória")
+        Long storeId,
+
         @NotNull(message = "O endereço é obrigatório")
         @Valid
         AddressRequestDTO deliveryAddress,

@@ -34,23 +34,25 @@ public class OrderController {
 
     @PatchMapping("/{id}/status")
     public ResponseEntity<OrderResponseDTO> update(@PathVariable Long id,
-                                                   @Valid @RequestBody UpdateOrderRequestDTO dto
+                                                   @Valid @RequestBody UpdateOrderRequestDTO dto,
+                                                   @AuthenticationPrincipal Jwt jwt
     ) {
         OrderResponseDTO responseDTO = orderService.updateStatus(
                 id,
-                dto
+                dto,
+                jwt.getSubject()
         );
 
         return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderResponseDTO>> findAll() {
-        return ResponseEntity.ok(orderService.findAll());
+    public ResponseEntity<List<OrderResponseDTO>> findAll(@AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok(orderService.findAll(jwt.getSubject()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderResponseDTO> findAll(@PathVariable Long id) {
-        return ResponseEntity.ok(orderService.findById(id));
+    public ResponseEntity<OrderResponseDTO> findAll(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok(orderService.findById(id, jwt.getSubject()));
     }
 }
